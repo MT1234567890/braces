@@ -1,15 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="jsonApp">
+
 <head>
     <meta charset="UTF-8">
     <title>JSON Validator & Formatter</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 </head>
+
 <body>
     <div ng-controller="jsonController">
+        <label>
+            Formatting Style:
+            <select ng-model="selectedStyle" ng-change="formatData()">
+                <option value="2">2 Tab Spacing</option>
+                <option value="3">3 Tab Spacing</option>
+                <option value="compact">Compact</option>
+            </select>
+        </label>
+        <br>
         <textarea ng-model="jsonData" placeholder="Enter JSON data here"></textarea>
         <br>
-        <button ng-click="validateAndFormat()">Validate & Format</button>
+        <button ng-click="formatData()">Format JSON</button>
         <br>
         <h4>Formatted JSON:</h4>
         <pre>{{formattedData}}</pre>
@@ -19,10 +30,14 @@
         var app = angular.module('jsonApp', []);
 
         app.controller('jsonController', function($scope) {
-            $scope.validateAndFormat = function() {
+            $scope.selectedStyle = "2";
+
+            $scope.formatData = function() {
                 try {
                     var parsedData = JSON.parse($scope.jsonData);
-                    $scope.formattedData = JSON.stringify(parsedData, null, 4);
+
+                    var spacing = $scope.selectedStyle === "compact" ? null : Number($scope.selectedStyle);
+                    $scope.formattedData = JSON.stringify(parsedData, null, spacing);
                 } catch (error) {
                     $scope.formattedData = "Invalid JSON: " + error.message;
                 }
@@ -30,4 +45,5 @@
         });
     </script>
 </body>
+
 </html>
