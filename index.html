@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="jsonApp">
+<head>
+    <meta charset="UTF-8">
+    <title>JSON Validator & Formatter</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body>
+    <div ng-controller="jsonController">
+        <textarea ng-model="jsonData" placeholder="Enter JSON data here"></textarea>
+        <br>
+        <button ng-click="validateAndFormat()">Validate & Format</button>
+        <br>
+        <h4>Formatted JSON:</h4>
+        <pre>{{formattedData}}</pre>
+    </div>
+
+    <script>
+        var app = angular.module('jsonApp', []);
+
+        app.controller('jsonController', function($scope) {
+            $scope.validateAndFormat = function() {
+                try {
+                    var parsedData = JSON.parse($scope.jsonData);
+                    $scope.formattedData = JSON.stringify(parsedData, null, 4);
+                } catch (error) {
+                    $scope.formattedData = "Invalid JSON: " + error.message;
+                }
+            };
+        });
+    </script>
+</body>
+</html>
