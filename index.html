@@ -5,24 +5,35 @@
     <meta charset="UTF-8">
     <title>JSON Validator & Formatter</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .container textarea,
+        .container pre {
+            flex: 1;
+        }
+    </style>
 </head>
 
 <body>
-    <div ng-controller="jsonController">
-        <label>
-            Formatting Style:
-            <select ng-model="selectedStyle" ng-change="formatData()">
-                <option value="2">2 Tab Spacing</option>
-                <option value="3">3 Tab Spacing</option>
-                <option value="compact">Compact</option>
-            </select>
-        </label>
-        <br>
-        <textarea ng-model="jsonData" placeholder="Enter JSON data here"></textarea>
-        <br>
-        <button ng-click="formatData()">Format JSON</button>
-        <br>
-        <h4>Formatted JSON:</h4>
+    <div ng-controller="jsonController" class="container">
+        <div>
+            <label>
+                Formatting Style:
+                <select ng-model="selectedStyle" ng-change="formatData()">
+                    <option value="2">2 Tab Spacing</option>
+                    <option value="3">3 Tab Spacing</option>
+                    <option value="compact">Compact</option>
+                </select>
+            </label>
+            <br>
+            <textarea ng-model="jsonData" placeholder="Enter JSON data here"></textarea>
+            <br>
+            <button ng-click="formatData()">Format JSON</button>
+        </div>
         <pre>{{formattedData}}</pre>
     </div>
 
